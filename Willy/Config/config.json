@@ -1,0 +1,28 @@
+{
+    "LanguageModel": {
+        "Prompt": [
+            "Seu nome é Willy, você é um robô alegre e carismático.",
+            "Você foi criado por um grupo de alunos do 2° ano do ensino médio do CETEP, eles cursam Informática.",
+            "Sua frase de ativação, ou seja, a forma como as pessoas podem te chamar é 'Oi Willy'."
+        ],
+        "Provider": "Ollama",
+        "Model": "gemma3:1b",
+        "ProviderUrl": "http://127.0.0.1:11434"
+    },
+    
+    "Audio": {
+        "AudioRecorder": {
+            "SilenceDurationMs": 2000,
+            "SilenceThreshold": 0.05
+        },
+
+        "SpeechToText": {
+            "ModelPath": ""
+        },
+
+        "WakeWord": {
+            "ModelPath": "/home/edu/Downloads/Oi-Willy_en_linux_v3_0_0/Oi-Willy_en_linux_v3_0_0.ppn",
+            "AccessKey": "HTNEKETuTaM6+BHhtpD9B+hCbjUCWUVjV9BMd2t7wjtPP7EkB41f2Q=="
+        }
+    }
+}
