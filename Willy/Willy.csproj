@@ -8,12 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EdgeTTS" Version="1.0.3" />
       <PackageReference Include="Microsoft.ML" Version="5.0.0-preview.1.25127.4" />
       <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.21.0" />
       <PackageReference Include="NAudio" Version="2.2.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="OllamaSharp" Version="5.1.7" />
       <PackageReference Include="OpenTK" Version="5.0.0-pre.13" />
+      <PackageReference Include="PiperSharp" Version="1.0.5" />
       <PackageReference Include="Porcupine" Version="3.0.7" />
       <PackageReference Include="PortAudioSharp" Version="0.3.0" />
       <PackageReference Include="PvRecorder" Version="1.2.10" />
@@ -29,8 +31,12 @@
 
     <ItemGroup>
       <None Update="Config\config.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Piper\**\*">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+
     </ItemGroup>
 
 </Project>

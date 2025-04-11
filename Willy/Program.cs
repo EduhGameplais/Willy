@@ -13,15 +13,17 @@ class Program
         
         dynamic config = Config.LoadConfig("Config/config.json");
         
-        SpeechToText speechToText = new SpeechToText("/home/edu/Downloads/ggml-large-v3-turbo-q8_0.bin");
-        WakeWord wakeWord = new WakeWord("/home/edu/Downloads/Oi-Willy_en_linux_v3_0_0/Oi-Willy_en_linux_v3_0_0.ppn",
-            "HTNEKETuTaM6+BHhtpD9B+hCbjUCWUVjV9BMd2t7wjtPP7EkB41f2Q==");
+        TextToSpeech textToSpeech = new TextToSpeech(config.Audio.TextToSpeech);
+        
+        SpeechToText speechToText = new SpeechToText(config.Audio.SpeechToText);
+        
+        WakeWord wakeWord = new WakeWord(config.Audio.WakeWord);
         
         Log.PrintLn("$Yellow$Carregando Ollama...");
         var uri = new Uri((string)config.LanguageModel.ProviderUrl);
         var ollama = new OllamaApiClient(uri);
             
-        ollama.SelectedModel = config.LanguageModel.Model;
+        ollama.SelectedModel = (string)config.LanguageModel.Model;
 
         //ollama.PullModelAsync(config.ollama.model);
         
@@ -61,10 +63,17 @@ class Program
             string imagePath = "/home/edu/Downloads/arvore.jpg";
             byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
             string base64Image = Convert.ToBase64String(imageBytes);
-            
+
+
+            string fullMesage = string.Empty;
             //chat.Messages.Add(new Message(ChatRole.User, new string[]{base64Image}));
             await foreach (var answerToken in chat.SendAsync(transcription))
+            {
                 Console.Write(answerToken);
+                fullMesage += answerToken;
+            }
+            
+            textToSpeech.SpeakAsync(fullMesage).GetAwaiter().GetResult();
         });
 
 
