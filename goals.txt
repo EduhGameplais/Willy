@@ -1,0 +1,5 @@
+( ) Treinar modelo de wakeword
+( ) Usar algum VAD e Noise Supression
+( ) Fazer voice recognition em real time streaming
+( ) LLM com streaming
+( ) TTS real time streaming
