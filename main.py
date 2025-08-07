@@ -3,7 +3,7 @@
 from llm.context import LLMContext, SystemMessage, UserMessage
 from llm.llm import LLM
 #from voice_recorder import listen
-from function_manager import scan_functions
+from tool_manager import scan_functions
 #from voice.transcriber import Transcriber
 
 functions = scan_functions()
