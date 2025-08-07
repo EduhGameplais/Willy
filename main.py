@@ -1,22 +1,25 @@
-import numpy as np
-from voice_recorder import listen
+#import numpy as np
+#import openai
+from llm.context import LLMContext, SystemMessage, UserMessage
+from llm.llm import LLM
+#from voice_recorder import listen
 from function_manager import scan_functions
-from faster_whisper import WhisperModel
+#from voice.transcriber import Transcriber
 
-scan_functions()
-'''
-audio = listen(3, 0.5, True)
+functions = scan_functions()
+#transcriber = Transcriber("medium") 
 
-model_size = "medium"
+#audio = listen(3, 0.5, True)
 
-audio_np = np.frombuffer(b''.join(audio), dtype=np.int16).astype(np.float32) / 32768.0  # normaliza para -1.0 a 1.0
+llm = LLM(tools=functions)
 
-# Run on GPU with FP16
-model = WhisperModel(model_size, device="cuda", compute_type="int8_float16")
+llm.context.add_message(SystemMessage("Fale na lingua que o usuário fala."))
 
-segments, info = model.transcribe(audio_np, beam_size=5, language="pt")
+llm.context.add_message(UserMessage("what time is in washington"))
 
-print("Detected language '%s' with probability %f" % (info.language, info.language_probability))
+def process_token(token:str):
+    print(token, end='')
 
-for segment in segments:
-    print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))'''
+llm.get_response_stream(process_token)
+
+#print(transcriber.transcribe(audio))

@@ -1,9 +1,14 @@
 import torch
 import numpy as np
+import time
 
+start_time = time.perf_counter()
+print("Loading silero...")
 model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad',
                               model='silero_vad',
                               force_reload=False)
+end_time = time.perf_counter()
+print(f"Silero loaded. ({end_time-start_time}s))")
 
 (get_speech_timestamps,
  save_audio,
