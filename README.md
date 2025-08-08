@@ -1,0 +1,11 @@
+## TODO
+- [ ] Treinar modelo de wakeword  
+- [x] Usar **Silero VAD**  
+- [ ] Usar **Noise Suppression**  
+- [x] **LLM** com streaming *(Gemma3 4B via Ollama)*
+- [x] **TTS** real-time streaming *(XTTS com Streaming)*  
+- [ ] Adaptar código para suportar **interrupção**  
+  - Ex.: caso alguém comece a falar, interromper a fala  
+- [x] Sistema de **Tools**
+- [ ] Adicionar suporte a **imagens** nas **tools**
+- [ ] Criar **system prompt**
