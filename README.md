@@ -9,3 +9,5 @@
 - [x] Sistema de **Tools**
 - [ ] Adicionar suporte a **imagens** nas **tools**
 - [ ] Criar **system prompt**
+- [ ] Fazer fine-tune do **PiperTTS** para criar voz customizada.
+  - Usar **ElevenLabs** para criar samples de voz e treinar com base nisso.
