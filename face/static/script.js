@@ -113,5 +113,24 @@ function stopThinking() {
 function setIdleState() {
   currentState = 'idle';
   const eyes = document.querySelectorAll('.eye');
-  const eyes = document.querySelectorAll('.bar');
+  const bars = document.querySelectorAll('.bar');
+
+  stopMouthAnimation();
+
+  if (thinkingBubble) {
+    thinkingBubble.classList.remove('show');
+  }
+
+  eyes.forEach(eye => {
+    eye.className = 'eye normal';
+  });
+
+  bars.forEach(bar => {
+    bar.classname = 'bar idle';
+    bar.style.height = '20px';
+  });
+
+  startBlinking();
+
+  if (status
 }
