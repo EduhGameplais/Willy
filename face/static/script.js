@@ -132,5 +132,7 @@ function setIdleState() {
 
   startBlinking();
 
-  if (status
+  if (status) {
+    status.textContent = 'Estado idle';
+  }
 }
