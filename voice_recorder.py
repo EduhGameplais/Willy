@@ -2,42 +2,55 @@ import time
 import pyaudio
 import numpy as np
 
-from voice import silero
+from voice.silero import Silero
 
-def listen(silence_limit_secs: float, silero_threshold: float, return_filtered_voice: bool = False): 
-    
-    audio = pyaudio.PyAudio()
-    
-    stream = audio.open(rate=16000, channels=1, format=pyaudio.paInt16, frames_per_buffer=1024, input=True)
-    
-    data = []
-    
-    only_voice_data = []
+class VoiceRecorder:
+    def __init__(self, silence_limit_secs: float, silero_threshold: float):
+        self.vad = Silero()
+        self.silence_limit_secs = silence_limit_secs
+        self.silero_threshold = silero_threshold
 
-    num_samples = 512
-
-    continue_recording = True
-
-    last_voice_detected = time.perf_counter()
-
-    i = 0
-    while continue_recording:
-        audio_chunk = stream.read(num_samples)
-
-        data.append(audio_chunk)
-
-        new_confidence = silero.process_audio_chunk(audio_chunk)
+    def listen(self, ): 
+        """
+        Grava voz até silencio ultrapassar o limite de silencio.
         
-        if new_confidence > silero_threshold:
-            last_voice_detected = time.perf_counter()
-            only_voice_data.append(audio_chunk)
-            
-        if time.perf_counter() - last_voice_detected > silence_limit_secs:
-            continue_recording = False
-                
-        print(new_confidence)
-        print(new_confidence > silero_threshold)
-    if return_filtered_voice:
-        return only_voice_data
-    else:
-        return data
+        Retorna: 
+          - Audio bruto
+          - Audio apenas voz detectada pelo VAD
+        """
+        
+        audio = pyaudio.PyAudio()
+
+        stream = audio.open(rate=16000, channels=1, format=pyaudio.paInt16, frames_per_buffer=1024, input=True)
+
+        data: list[bytes] = []
+
+        only_voice_data: list[bytes] = []
+
+        num_samples = 512
+
+        continue_recording = True
+
+        last_voice_detected = time.perf_counter()
+
+        i = 0
+        print("Recording...")
+        while continue_recording:
+            audio_chunk = stream.read(num_samples)
+
+            data.append(audio_chunk)
+
+            new_confidence = self.vad.process_audio_chunk(audio_chunk)
+
+            if new_confidence > self.silero_threshold:
+                last_voice_detected = time.perf_counter()
+                only_voice_data.append(audio_chunk)
+
+            if time.perf_counter() - last_voice_detected > self.silence_limit_secs:
+                continue_recording = False
+
+            #print(new_confidence)
+            #print(new_confidence > silero_threshold)
+        print("Recording finished.")
+
+        return data, only_voice_data

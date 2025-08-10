@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name-"viewport" contetn="width=device=width, initial-scale=1.0"> 
+  <title>Robot Face</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"">
+</head>
+<body>
+  <div class="avatar-container">
+    <div class="thinking-bubble" id="thinkingbubble">? 🤔 ?</div>
+  <div class="face">
+    <div class="eye" id="leftEye"></div>
+    <div class="eye" id="rightEye"></div>
+  </div>
+
+  <div class="mouth" id="mouth">
+    <div class="bar idle"></div>
+    <div class="bar idle"></div>
+    <div class="bar idle"></div>
+    <div class="bar idle"></div>
+    <div class="bar idle"></div>
+   </div>
+  </div>
+  
+   <-!-- Botoes temporarios do willy gay ->
+    <div class="controls">
+          <button class="control-btn" onclick="setState('idle')">Idle</button>
+          <button class="control-btn" onclick="setState('thinking')">Pensando<button>
+          <button class="control-btn" onclick="setSatet('speaking')">Falando</buttton>
+          </div>
+
+          <div class="status" id="status">Estado idle</div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,7 +1,10 @@
 import importlib
 import os
 
-def scan_functions():
+
+def scan_tools():
+    """Faz scan de tools para LLM na pasta 'tools'."""
+
     tools = []
     
     tools_available = "Tools Available: "

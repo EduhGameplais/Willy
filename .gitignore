@@ -2,3 +2,5 @@ venv
 Prototipos
 Prototipos/*
 *.pyc
+piper-recording-studio/*
+xtts

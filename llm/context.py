@@ -9,7 +9,7 @@ class AssistantMessage:
         self.content = content
         
         if tool_calls == None and content == None:
-            raise ValueError("Não é possível criar uma mensagem de assistente sem 'tool_calls' ou 'content'.")
+            raise ValueError("It is not possible to create an assistant message without 'tool_calls' or 'content'.")
 
 class ToolMessage:
     def __init__(self, tool_name: str, content: str):
@@ -75,9 +75,61 @@ class LLMContext:
         
         return context
     
-    def get_context_for_genai(self):
-        #TODO: Implementar context_generator para genai
-        pass
+    def get_messages_for_gemini(self):
+        context = []
+        
+        if self.system_prompt != "":
+            pass
+        
+        for message in self.messages:
+            if isinstance(message, SystemMessage):
+                
+                pass
+                
+            elif isinstance(message, UserMessage):
+                content = message.content
+                if self.system_prompt != "":
+                    content = self.system_prompt + "\n\n" + content
+                    self.system_prompt = ""
+                item = {
+                    "role": "user",
+                    "parts": [content],
+                }
+                context.append(item)
+                
+            elif isinstance(message, AssistantMessage):
+                item = {
+                    "role": "model",
+                    "parts": [],
+                }
+                if message.content is not None:
+                    item["parts"].append(message.content)
+                if message.tool_calls is not None:
+                    tool_calls = []
+                    for tool_call in message.tool_calls:
+                        tool_calls.append({
+                            "function_call": {
+                                "name": tool_call["function"]["name"],
+                                "args": tool_call["function"]["arguments"],
+                            }
+                        })
+                    item["parts"].extend(tool_calls)
+                context.append(item)
+                
+            elif isinstance(message, ToolMessage):
+                context.append({
+                    "role": "tool",
+                    "parts": [{
+                        "function_response": {
+                            "name": message.tool_name,
+                            "response": {
+                                "content": message.content
+                            }
+                        }
+                    }]
+                })
+        
+        return context
     
     def get_context_for_local(self):
         return self.messages
