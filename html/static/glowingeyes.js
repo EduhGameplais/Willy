@@ -232,8 +232,3 @@ class GlowingEyes {
         }, 2000);
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const glowingEyes = new GlowingEyes();
-    window.glowingEyes = glowingEyes;
-});

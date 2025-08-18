@@ -23,9 +23,47 @@
             <button class="shape-btn" title="Raiva"></button>
             <button class="shape-btn" title="Pensando"></button>
             <button class="shape-btn" title="Escutando"></button>
+            <button onclick="setFullscreen()">Enter Fullscreen</button>
+            <button onclick="startWebMic('192.168.3.11', 2567, 512)">Enter Fullscreen</button>
         </div>
     </div>
-    <script src="static/script.js"></script>
+    <script src="static/glowingeyes.js"></script>
     <script src="static/webmic.js"></script>
+    <script>
+        function setFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                  document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { /* Firefox */
+                  document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                  document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { /* IE/Edge */
+                  document.documentElement.msRequestFullscreen();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            
+            const glowingEyes = new GlowingEyes();
+            window.glowingEyes = glowingEyes;
+            const ip = window.location.hostname;
+
+            
+
+            setInterval(async () => {
+                try {
+                    const emotion = await fetch("/emotion").then(response => response.text());
+
+                    if (emotion != glowingEyes.getCurrentEmotion())
+                        glowingEyes.setEmotion(emotion);
+                        
+                }
+                catch {
+                    console.error("Erro ao pegar emotion.")
+                }
+            }, 100)
+        });
+    </script>
 </body>
 </html>

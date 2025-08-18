@@ -3,12 +3,13 @@
 - [x] Usar **Silero VAD**  
 - [ ] Usar **Noise Suppression**  
 - [x] **LLM** com streaming *(Gemma3 4B via Ollama)*
-- [x] --**TTS** real-time streaming *(XTTS com Streaming)*  --
-  - Migrar para **PiperTTS**
+- [x] --**TTS** real-time streaming *(PiperTTS com Streaming)*  --
 - [ ] Adaptar código para suportar **interrupção**  
   - Ex.: caso alguém comece a falar, interromper a fala  
-- [x] Sistema de **Tools**
+- [x] Criar sistema de **Tools**
 - [ ] Adicionar suporte a **imagens** nas **tools**
 - [ ] Criar **system prompt**
 - [ ] Fazer fine-tune do **PiperTTS** para criar voz customizada.
   - Usar **ElevenLabs** para criar samples de voz e treinar com base nisso.
+- [ ] Fazer detecção de quem fala
+  - Usar **pyannote** com *cosine similarization* para detectar com quem o willy está falando.

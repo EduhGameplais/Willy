@@ -1,6 +1,10 @@
 venv
-Prototipos
-Prototipos/*
+prototipos
+prototipos/*
 *.pyc
 piper-recording-studio/*
 xtts
+__pychache__
+*.wav
+pretrained_models
+tmpdir

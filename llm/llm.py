@@ -12,6 +12,7 @@ class LLM:
         self.tools = tools
         
     def get_response_stream(self, token_callback: Callable[[str], None]):
+        thinking = False
         stream_resp = chat(
             model=self.model,
             messages=self.context.get_messages_for_ollama(),
@@ -26,7 +27,16 @@ class LLM:
         for chunk in stream_resp:
             msg = chunk.message
             if msg.content:
-                token_callback(msg.content)
+                if("<think>" in msg.content):
+                    thinking = True
+                    print("Started thinking: ")
+                elif "</think>" in msg.content:
+                    thinking = False
+                    print("Thinking end.")
+                elif not thinking:
+                    token_callback(msg.content.replace("</think>", ""))
+                else:
+                    print(msg.content,end='')
                 full_msg += msg.content
             if msg.tool_calls:
                 have_tool_call = True
